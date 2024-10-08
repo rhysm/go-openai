@@ -109,7 +109,7 @@ type ChatCompletionMessage struct {
 	ToolCalls []ToolCall `json:"tool_calls,omitempty"`
 
 	// For Role=tool prompts this should be set to the ID given in the assistant's prior request to call a tool.
-	ToolCallID *int `json:"tool_call_id,omitempty"`
+	ToolCallID string `json:"tool_call_id,omitempty"`
 }
 
 func (m ChatCompletionMessage) MarshalJSON() ([]byte, error) {
@@ -125,7 +125,7 @@ func (m ChatCompletionMessage) MarshalJSON() ([]byte, error) {
 			Name         string            `json:"name,omitempty"`
 			FunctionCall *FunctionCall     `json:"function_call,omitempty"`
 			ToolCalls    []ToolCall        `json:"tool_calls,omitempty"`
-			ToolCallID   *int              `json:"tool_call_id,omitempty"`
+			ToolCallID   string            `json:"tool_call_id,omitempty"`
 		}(m)
 		return json.Marshal(msg)
 	}
@@ -138,7 +138,7 @@ func (m ChatCompletionMessage) MarshalJSON() ([]byte, error) {
 		Name         string            `json:"name,omitempty"`
 		FunctionCall *FunctionCall     `json:"function_call,omitempty"`
 		ToolCalls    []ToolCall        `json:"tool_calls,omitempty"`
-		ToolCallID   *int              `json:"tool_call_id,omitempty"`
+		ToolCallID   string            `json:"tool_call_id,omitempty"`
 	}(m)
 	return json.Marshal(msg)
 }
@@ -152,7 +152,7 @@ func (m *ChatCompletionMessage) UnmarshalJSON(bs []byte) error {
 		Name         string        `json:"name,omitempty"`
 		FunctionCall *FunctionCall `json:"function_call,omitempty"`
 		ToolCalls    []ToolCall    `json:"tool_calls,omitempty"`
-		ToolCallID   *int          `json:"tool_call_id,omitempty"`
+		ToolCallID   string        `json:"tool_call_id,omitempty"`
 	}{}
 
 	if err := json.Unmarshal(bs, &msg); err == nil {
@@ -167,7 +167,7 @@ func (m *ChatCompletionMessage) UnmarshalJSON(bs []byte) error {
 		Name         string            `json:"name,omitempty"`
 		FunctionCall *FunctionCall     `json:"function_call,omitempty"`
 		ToolCalls    []ToolCall        `json:"tool_calls,omitempty"`
-		ToolCallID   *int              `json:"tool_call_id,omitempty"`
+		ToolCallID   string            `json:"tool_call_id,omitempty"`
 	}{}
 	if err := json.Unmarshal(bs, &multiMsg); err != nil {
 		return err
@@ -179,7 +179,7 @@ func (m *ChatCompletionMessage) UnmarshalJSON(bs []byte) error {
 type ToolCall struct {
 	// Index is not nil only in chat completion chunk object
 	Index    *int         `json:"index,omitempty"`
-	ID       int          `json:"id"`
+	ID       string       `json:"id"`
 	Type     ToolType     `json:"type"`
 	Function FunctionCall `json:"function"`
 }
